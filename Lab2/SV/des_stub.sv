@@ -162,6 +162,40 @@ module SF (inp_block, out_block);
    input logic [31:0] inp_block;
    output logic [31:0] out_block;
 
+   assign out_block[31] = inp_block[32 - 16];
+   assign out_block[30] = inp_block[32 - 7];
+   assign out_block[29] = inp_block[32 - 20];
+   assign out_block[28] = inp_block[32 - 21];
+   assign out_block[27] = inp_block[32 - 29];
+   assign out_block[26] = inp_block[32 - 12];
+   assign out_block[25] = inp_block[32 - 28];
+   assign out_block[24] = inp_block[32 - 17];
+   assign out_block[23] = inp_block[32 - 1];
+   assign out_block[22] = inp_block[32 - 15];
+   assign out_block[21] = inp_block[32 - 23];
+   assign out_block[20] = inp_block[32 - 26];
+   assign out_block[19] = inp_block[32 - 5];
+   assign out_block[18] = inp_block[32 - 18];
+   assign out_block[17] = inp_block[32 - 31];
+   assign out_block[16] = inp_block[32 - 10];
+   assign out_block[15] = inp_block[32 - 2];
+   assign out_block[14] = inp_block[32 - 8];
+   assign out_block[13] = inp_block[32 - 24];
+   assign out_block[12] = inp_block[32 - 14];
+   assign out_block[11] = inp_block[32 - 31];
+   assign out_block[10] = inp_block[32 - 27]
+   assign out_block[9] = inp_block[32 - 3];
+   assign out_block[8] = inp_block[32 - 9];
+   assign out_block[7] = inp_block[32 - 19];
+   assign out_block[6] = inp_block[32 - 13];
+   assign out_block[5] = inp_block[32 - 30];
+   assign out_block[4] = inp_block[32 - 6];
+   assign out_block[3] = inp_block[32 - 22];
+   assign out_block[2] = inp_block[32 - 11];
+   assign out_block[1] = inp_block[32 - 4];
+   assign out_block[0] = inp_block[32 - 25];
+
+
 endmodule // SF
 
 // Expansion Function

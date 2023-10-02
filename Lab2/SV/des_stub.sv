@@ -258,11 +258,34 @@ endmodule // EF
 
 module feistel (inp_block, subkey, out_block);
 
-   input logic [31:0]  inp_block;
-   input logic [47:0]  subkey;
-   output logic [31:0] out_block;
+    input logic [31:0]  inp_block,
+    input logic [47:0]  subkey,
+    output logic [31:0] out_block
+    logic [47:0] expanded_right;
+    logic [47:0] mixed_block;
+    logic [31:0] substituted_block;
+    logic [31:0] permuted_block;
 
-endmodule // Feistel
+    EF expansion_block(.inp_block(inp_block[31:0]), .out_block(expanded_right));
+    assign mixed_block = expanded_right ^ subkey;
+
+    SF substitution_block(.inp_block(mixed_block[47:0]), .out_block(substituted_block));
+
+    assign permuted_block[31:0] = {
+        substituted_block[15], substituted_block[6], substituted_block[19], substituted_block[20],
+        substituted_block[28], substituted_block[11], substituted_block[27], substituted_block[16],
+        substituted_block[0], substituted_block[14], substituted_block[22], substituted_block[25],
+        substituted_block[4], substituted_block[17], substituted_block[30], substituted_block[9],
+        substituted_block[1], substituted_block[7], substituted_block[23], substituted_block[13],
+        substituted_block[31], substituted_block[26], substituted_block[2], substituted_block[8],
+        substituted_block[18], substituted_block[12], substituted_block[29], substituted_block[5],
+        substituted_block[21], substituted_block[10], substituted_block[3], substituted_block[24]
+    };
+	
+    assign out_block = permuted_block;
+
+endmodule // feistel
+
 
 // DES block round
 module round (inp_block, subkey, out_block);

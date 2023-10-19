@@ -1138,13 +1138,13 @@ module S8_Box (inp_bits, out_bits);
 endmodule // S8_Box
 
 module DES (input logic [63:0] key, input logic [63:0] plaintext, 
-	    input logic encrypt, output logic [63:0] ciphertext);
+	    input logic encrypt, input logic cipher, output logic [63:0] ciphertext);
 
    logic [47:0] 	SubKey1, SubKey2, SubKey3, SubKey4;   
    logic [47:0] 	SubKey5, SubKey6, SubKey7, SubKey8;   
    logic [47:0] 	SubKey9, SubKey10, SubKey11, SubKey12;
    logic [47:0] 	SubKey13, SubKey14, SubKey15, SubKey16;
-
+   logic[63:0] FPout;
    logic [63:0] 	ip_out;   
   
    
@@ -1209,14 +1209,15 @@ module DES (input logic [63:0] key, input logic [63:0] plaintext,
    // round 13
    round R13(R12_out, ThirteenKey, R13_out);
    // round 14
-   round R14(R13_out, FourteenKKey, R14_out);
+   round R14(R13_out, FourteenKey, R14_out);
    // round 15
    round R15(R14_out, FifteenKey, R15_out);
    // round 16
 	round R16(R15_out, SixteenKey, R16_out);
    // Final Permutation (IP^{-1}) (swap output of round16)
-   FP FP({R16_out[31:0], R16_out[63:32]}, ciphertext);
+   FP FP({R16_out[31:0], R16_out[63:32]}, FPOut);
    
+   assign ciphertext = cipher ? (encrypt ? (FPout) : (ip_out ^ FPout)) : (FPout);
 endmodule // DES
 
 
